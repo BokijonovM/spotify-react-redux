@@ -1,5 +1,15 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from 'react-redux'
+import { getDataSearch } from "../redux/actions";
+
+const mapStateToProps = s => s
+ const mapDispatchToProps = (dispatch) => ({
+     getData: (query) => {
+       dispatch(getDataSearch(query))
+     }
+ })
 
 class Sidebar extends React.Component {
   state = {
@@ -77,16 +87,16 @@ class Sidebar extends React.Component {
                           className="input-group-append"
                           style={{ marginBottom: "4%" }}
                         >
-                          <button
-                            className="btn btn-outline-secondary btn-sm"
+                          <Button
+                           variant="outline-primary"
                             type="button"
                             id="button-addon1"
                             onClick={() =>
-                              this.props.search(this.state.searchInput)
+                              this.props.getData(this.state.searchInput)
                             }
                           >
-                            GO
-                          </button>
+                          Search
+                          </Button>
                         </div>
                       </div>
                     </li>
@@ -111,4 +121,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default withRouter(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Sidebar));
