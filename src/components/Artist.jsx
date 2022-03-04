@@ -1,22 +1,39 @@
 import React from "react";
 import AlbumCard from "./AlbumCard";
 import { Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { connect } from "react-redux";
+import { getJobsSearchAction } from "../../redux/actions";
 
-class Artist extends React.Component {
-  state = {
-    artist: {},
-    songs: [],
-  };
+const mapStateToProps = (state) => ({
+  jobsSearchFromReduxStore: state.jobsSearch.jobsArray,
+  jobsSearchFetchFailed: state.jobsSearch.isError,
+  areJobsSearchStillFetching: state.jobsSearch.isLoading,
+});
 
-  componentDidMount = async () => {
-    let artistId = this.props.match.params.id;
 
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
-    });
+const mapDispatchToProps = (dispatch) => ({
+  getJobsSearch: (keyWordSearch, jobCategory) => {
+    // I need to dispatch getBooksAction for initializing the fetch
+    console.log("in mapDispatchToProps");
+    dispatch(getJobsSearchAction(keyWordSearch, jobCategory));
+  },
+});
 
-    try {
+const Artist = () => {
+
+const [artist,setArtist]  = useState({})
+const [songs,setSongs] = useState([])
+const { artistId } = useParams()
+
+let headers = new Headers({
+  "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+  "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
+});
+
+const fetchArtist = async () => {
+  try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/deezer/artist/" + artistId,
         {
@@ -27,7 +44,7 @@ class Artist extends React.Component {
 
       if (response.ok) {
         let artist = await response.json();
-        this.setState(
+        setArtist(
           {
             artist,
           },
@@ -43,7 +60,7 @@ class Artist extends React.Component {
 
             if (tracksResponse.ok) {
               let tracklist = await tracksResponse.json();
-              this.setState({ songs: tracklist.data });
+              setSongs({ songs: tracklist.data });
             }
           }
         );
@@ -51,9 +68,12 @@ class Artist extends React.Component {
     } catch (exception) {
       console.log(exception);
     }
-  };
+}
 
-  render() {
+useEffect(()=>{
+  fetchArtist()
+},[])
+
     return (
       <div className="col-12 col-md-9 offset-md-3 mainPage">
         <Row className="mb-3">
@@ -68,8 +88,8 @@ class Artist extends React.Component {
 
         <Row>
           <div className="col-12 col-md-10 col-lg-10 mt-5">
-            <h2 className="titleMain">{this.state.artist.name}</h2>
-            <div id="followers">{this.state.artist.nb_fan} followers</div>
+            <h2 className="titleMain">{artist.name}</h2>
+            <div id="followers">{artist.nb_fan} followers</div>
             <div
               className="d-flex justify-content-center"
               id="button-container"
@@ -96,7 +116,7 @@ class Artist extends React.Component {
             </div>
             <div className="pt-5 mb-5">
               <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
-                {this.state.songs?.map((song) => (
+                {songs?.map((song) => (
                   <AlbumCard song={song} key={song.id} />
                 ))}
               </Row>
@@ -106,6 +126,6 @@ class Artist extends React.Component {
       </div>
     );
   }
-}
 
-export default Artist;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artist);
