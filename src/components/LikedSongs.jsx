@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { removeFromCartAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
+import { Button } from "react-bootstrap";
 
 const mapStateToProps = (state) => ({
   albumCart: state.albumCart.albums,
@@ -15,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-function LikedSongs({ albumCart, removeFromCart }) {
+function LikedSongs({ albumCart, removeFromCart, cartLength }) {
   const navigate = useNavigate();
   console.log("albumCart", albumCart);
   return (
@@ -58,6 +59,9 @@ function LikedSongs({ albumCart, removeFromCart }) {
           </div>
         );
       })}
+      <Button className="number-of-liked-songs" variant="info">
+        {cartLength}
+      </Button>
     </div>
   );
 }

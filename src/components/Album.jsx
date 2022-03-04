@@ -22,13 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const Album = ({
-  cartLength,
-  addToAlbumCart,
-  albumInfo,
-  getAlbums,
-  albumsFromReduxStore,
-}) => {
+const Album = ({ albumInfo, getAlbums, albumsFromReduxStore }) => {
   const params = useParams();
 
   useEffect(() => {
@@ -47,7 +41,7 @@ const Album = ({
           <div>DISCOVER</div>
         </div>
       </Row>
-      <Row>
+      <Row style={{ marginRight: "-200px" }}>
         {albumInfo.cover && (
           <div className="col-md-3 pt-5 text-center" id="img-container">
             <img

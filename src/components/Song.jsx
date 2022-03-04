@@ -2,7 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { connect } from "react-redux";
-import { addToAlbumCartActionWithThunk } from "../redux/actions";
+import {
+  addToAlbumCartActionWithThunk,
+  removeFromCartAction,
+} from "../redux/actions";
 
 const mapStateToProps = (state) => ({});
 
@@ -10,11 +13,13 @@ const mapDispatchToProps = (dispatch) => ({
   addToCart: (musicToAdd) => {
     dispatch(addToAlbumCartActionWithThunk(musicToAdd));
   },
+  removeFromCart: (index) => {
+    dispatch(removeFromCartAction(index));
+  },
 });
 
 function Song({ tracks, addToCart }) {
   const navigate = useNavigate();
-  console.log("track", tracks);
   return (
     <div>
       {tracks.map((track, i) => {
@@ -48,8 +53,6 @@ function Song({ tracks, addToCart }) {
             <span
               onClick={() => {
                 addToCart(track);
-                let data = document.getElementById("love-icon-id");
-                data.style.color = "red";
               }}
             >
               <AiFillHeart id="love-icon-id" className="love-icon ml-2" />

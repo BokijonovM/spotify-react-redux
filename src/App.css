@@ -6,6 +6,7 @@ body {
     rgba(33, 44, 61, 1) 42%,
     rgb(15, 21, 29) 100%
   );
+  overflow-x: hidden;
 }
 
 /*SIDEBAR SECTION*/
@@ -230,4 +231,9 @@ ul {
 
 .mainPage img {
   width: 200px;
+}
+.number-of-liked-songs {
+  position: fixed;
+  top: 20px;
+  right: 20px;
 }
