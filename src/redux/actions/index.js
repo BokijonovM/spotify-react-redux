@@ -10,9 +10,8 @@ export const GET_ALBUMS_ERROR = "GET_ALBUMS_ERROR";
 export const GET_ALBUMS_LOADING = "GET_ALBUMS_LOADING";
 export const ADD_TO_ALBUM_CART = "ADD_TO_ALBUM_CART";
 export const REMOVE_TO_ALBUM_CART = "REMOVE_TO_ALBUM_CART";
-export const ADD_TO_HOME_DISPLAY = 'ADD_TO_HOME_DISPLAY'
-export const LOADING_WHILE_DISPLAY = 'LOADING_WHILE_DISPLAY'
-
+export const ADD_TO_HOME_DISPLAY = "ADD_TO_HOME_DISPLAY";
+export const LOADING_WHILE_DISPLAY = "LOADING_WHILE_DISPLAY";
 
 export const addToFavouritesArtistsAction = (artistToAdd) => ({
   type: ADD_TO_FAVOURITESARTISTS,
@@ -26,8 +25,7 @@ export const removeFromFavouritesArtistsAction = (indexToRemove) => ({
 
 export const getArtistAction = (artistId) => {
   console.log("in getArtistAction");
-  
-  
+
   return async (dispatch, getState) => {
     let headers = new Headers({
       "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -53,7 +51,7 @@ export const getArtistAction = (artistId) => {
         });
       }
     };
-    
+
     try {
       //let category = jobCategory ? `&category=${jobCategory}` : "";
       //let keyWord = keyWordSearch ? `&search=${keyWordSearch}` : "";
@@ -67,20 +65,17 @@ export const getArtistAction = (artistId) => {
       if (response.ok) {
         let data = await response.json();
         console.log("Artist IN ACTION CREATOR", data);
-        
+
         dispatch({
           type: GET_ARTIST,
           payload: data,
         });
-        
-        getSongs(artistId);
-        
 
+        getSongs(artistId);
 
         dispatch({
           type: GET_ARTIST_LOADING,
         });
-        
       } else {
         console.log("error happened fetching the jobs");
         dispatch({
@@ -97,6 +92,10 @@ export const getArtistAction = (artistId) => {
       });
       dispatch({
         type: GET_ARTIST_LOADING,
+      });
+    }
+  };
+};
 
 export const addToCartAction = (musicToAdd) => ({
   type: ADD_TO_ALBUM_CART,
@@ -125,50 +124,50 @@ export const addToAlbumCartActionWithThunk = (musicToAdd) => {
 };
 
 let headers = new Headers({
-    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-    "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
-  });
+  "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+  "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
+});
 
-export const searchAction = (term)=>({
-    type: ADD_TO_HOME_DISPLAY,
-    payload: term
-}) 
+export const searchAction = (term) => ({
+  type: ADD_TO_HOME_DISPLAY,
+  payload: term,
+});
 
-
-export const getDataSearch = (query) =>{
-    return (dispatch) => {
-  setTimeout( async()=>{
-   try {
-       const response = await fetch(
-     "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
-       query, {
-           method: 'GET',
-           headers
-       });
-       if(response.ok){
-           const {data} = await response.json()
-           dispatch({
-               type: ADD_TO_HOME_DISPLAY,
-               payload:data
-           })
-           dispatch({
-               type: LOADING_WHILE_DISPLAY,
-           })
-           console.log(data)
-       }else{
-        dispatch({
+export const getDataSearch = (query) => {
+  return (dispatch) => {
+    setTimeout(async () => {
+      try {
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/deezer/search?q=" + query,
+          {
+            method: "GET",
+            headers,
+          }
+        );
+        if (response.ok) {
+          const { data } = await response.json();
+          dispatch({
+            type: ADD_TO_HOME_DISPLAY,
+            payload: data,
+          });
+          dispatch({
             type: LOADING_WHILE_DISPLAY,
-        })
-       }
-   } catch (error) {
-       console.log(error)
-       dispatch({
-        type: LOADING_WHILE_DISPLAY,
-    })
-   }
-  })
-    }
-}
+          });
+          console.log(data);
+        } else {
+          dispatch({
+            type: LOADING_WHILE_DISPLAY,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        dispatch({
+          type: LOADING_WHILE_DISPLAY,
+        });
+      }
+    });
+  };
+};
 
 export const getAlbumsAction = (query) => {
   console.log("in getAlbumsAction");

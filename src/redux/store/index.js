@@ -5,8 +5,6 @@ import favouritesArtistsReducer from "../reducers/favouritesArtists";
 import artistReducer from "../reducers/artist";
 import { mainReducer } from "../reducers/main";
 import { SongReducer } from "../reducers/songs";
-
-import thunk from "redux-thunk";
 import albumReducer from "../reducers/album";
 import cartReducerAlbum from "../reducers/album2";
 
@@ -22,12 +20,12 @@ export const initialState = {
     songs: [],
     isError: false,
     isLoading: true,
-    
   },
   artist: {
     isError: false,
     isLoading: true,
     searchTerm: [],
+  },
   albumCart: {
     albums: [],
   },
@@ -51,6 +49,4 @@ export const configureStore = createStore(
   bigReducer,
   initialState,
   aComposeFunctionThatAlwaysWorks(applyMiddleware(thunk))
-});
-
-
+);

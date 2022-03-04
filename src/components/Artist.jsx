@@ -1,8 +1,8 @@
 import React from "react";
 import AlbumCard from "./AlbumCard";
-import { Row, Col,Spinner,Alert } from "react-bootstrap";
-import {  useEffect } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Row, Col, Spinner, Alert } from "react-bootstrap";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { getArtistAction } from "../redux/actions";
 
@@ -12,7 +12,6 @@ const mapStateToProps = (state) => ({
   areArtistStillFetching: state.artistPage.isLoading,
   songsFromReduxStore: state.artistPage.songs,
 });
-
 
 const mapDispatchToProps = (dispatch) => ({
   getArtist: (artistId) => {
@@ -31,9 +30,9 @@ const Artist = ({
 }) => {
   // const [artist, setArtist] = useState({});
   // const [songs, setSongs] = useState([]);
-  const  params  = useParams();
-console.log(artistFromReduxStore);
-console.log(songsFromReduxStore);
+  const params = useParams();
+  console.log(artistFromReduxStore);
+  console.log(songsFromReduxStore);
 
   // let headers = new Headers({
   //   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -118,11 +117,17 @@ console.log(songsFromReduxStore);
           </div>
           <div className="pt-5 mb-5">
             <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
-              {areArtistStillFetching ? (<div className="d-flex justify-content-center mt-4">
-                <Spinner variant="primary" animation="border" />
-              </div>) : artistFetchFailed ? (<Alert variant="danger">Fetch error, try again</Alert>) : (songsFromReduxStore?.map((song) => (
-                <AlbumCard song={song} key={song.id} />
-              )))}
+              {areArtistStillFetching ? (
+                <div className="d-flex justify-content-center mt-4">
+                  <Spinner variant="primary" animation="border" />
+                </div>
+              ) : artistFetchFailed ? (
+                <Alert variant="danger">Fetch error, try again</Alert>
+              ) : (
+                songsFromReduxStore?.map((song) => (
+                  <AlbumCard song={song} key={song.id} />
+                ))
+              )}
             </Row>
           </div>
         </Col>
@@ -130,6 +135,5 @@ console.log(songsFromReduxStore);
     </div>
   );
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);
