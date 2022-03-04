@@ -51,11 +51,10 @@ class App extends React.Component {
             <Routes>
               <Route
                 path="/"
-                exact
-                render={() => <Home searchResults={this.state.searchResults} />}
+                element={<Home searchResults={this.state.searchResults} />}
               />
-              <Route path="/artist/:id" element={Artist} />
-              <Route path="/album/:id" element={Album} />
+              <Route path="/artist/:id" element={<Artist />} />
+              <Route path="/album/:id" element={<Album />} />
             </Routes>
           </Row>
         </div>

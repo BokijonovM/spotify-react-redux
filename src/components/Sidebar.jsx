@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export default class Sidebar extends Component {
-  state = {
-    searchInput: "",
-  };
-
-  render() {
-    return (
+function Sidebar(props) {
+  const location = useLocation();
+  const [searchInput, setSearchInput] = useState("");
+  return (
+    <div>
       <div className="col-2">
         <nav
           className="navbar navbar-expand-md navbar-white bg-navbar fixed-left justify-content-between"
@@ -57,7 +56,7 @@ export default class Sidebar extends Component {
                       <i className="fas fa-home fa-lg"></i>&nbsp; Fav Artists
                     </Link>
                   </li>
-                  {this.props.location.pathname === "/" && (
+                  {location.pathname === "/" && (
                     <li>
                       <div className="input-group mt-3">
                         <input
@@ -68,9 +67,7 @@ export default class Sidebar extends Component {
                           aria-label="Search"
                           aria-describedby="basic-addon2"
                           onChange={(event) =>
-                            this.setState({
-                              searchInput: event.currentTarget.value,
-                            })
+                            setSearchInput(event.target.value)
                           }
                         />
                         <div
@@ -81,9 +78,7 @@ export default class Sidebar extends Component {
                             className="btn btn-outline-secondary btn-sm"
                             type="button"
                             id="button-addon1"
-                            onClick={() =>
-                              this.props.search(this.state.searchInput)
-                            }
+                            onClick={() => props.search(searchInput)}
                           >
                             GO
                           </button>
@@ -107,6 +102,8 @@ export default class Sidebar extends Component {
           </div>
         </nav>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default Sidebar;
