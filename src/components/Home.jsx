@@ -1,6 +1,16 @@
 import React from 'react'
 import AlbumCard from './AlbumCard'
 import { Row, Col } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { getDataSearch } from '../redux/actions'
+import Song from './Song'
+
+const mapStateToProps = (state) => state
+const mapDispatchToProps = (dispatch) => ({
+  getHomeData:(query) =>{
+    dispatch(getDataSearch(query))
+  }
+})
 
 class Home extends React.Component {
   state = {
@@ -98,7 +108,10 @@ class Home extends React.Component {
   render() {
     return (
       <Col className='col-12 col-md-9 offset-md-3 mainPage'>
-        <Row>
+        {/* <Row>
+        {this.props.artist.searchTerm.map((song)=>(<AlbumCard song={song}/>))}
+        </Row> */}
+         <Row>
           <div className='col-9 col-lg-11 mainLinks d-none d-md-flex'>
             <div>TRENDING</div>
             <div>PODCAST</div>
@@ -107,13 +120,14 @@ class Home extends React.Component {
             <div>DISCOVER</div>
           </div>
         </Row>
-        {this.props.searchResults.length > 0 && (
+        
+        {this.props.artist.searchTerm.length > 0 && (
           <Row>
             <Col xs={10}>
               <div id='searchResults'>
                 <h2>Search Results</h2>
                 <Row className='row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3'>
-                  {this.props.searchResults.map((song) => (
+                  {this.props.artist.searchTerm.map((song) => (
                     <AlbumCard song={song} key={song.id} />
                   ))}
                 </Row>
@@ -121,7 +135,8 @@ class Home extends React.Component {
             </Col>
           </Row>
         )}
-        {this.props.searchResults.length === 0 && (
+        
+        {this.props.artist.searchTerm.length === 0 && (
           <>
             <Row>
               <Col xs={10}>
@@ -169,10 +184,10 @@ class Home extends React.Component {
               </Col>
             </Row>
           </>
-        )}
+        )} 
       </Col>
     )
   }
 }
 
-export default Home
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
