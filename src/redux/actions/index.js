@@ -192,10 +192,6 @@ export const getDataSearch = (query) =>{
             type: LOADING_WHILE_DISPLAY,
           });
           console.log(data);
-        } else {
-          dispatch({
-            type: LOADING_WHILE_DISPLAY,
-          });
         }
       } catch (error) {
         console.log(error);
