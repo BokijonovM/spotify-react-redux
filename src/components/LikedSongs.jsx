@@ -1,23 +1,26 @@
 import React from "react";
+import { connect } from "react-redux";
+import { removeFromCartAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-import { connect } from "react-redux";
-import { addToAlbumCartActionWithThunk } from "../redux/actions";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  albumCart: state.albumCart.albums,
+  cartLength: state.albumCart.albums.length,
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (musicToAdd) => {
-    dispatch(addToAlbumCartActionWithThunk(musicToAdd));
+  removeFromCart: (index) => {
+    dispatch(removeFromCartAction(index));
   },
 });
 
-function Song({ tracks, addToCart }) {
+function LikedSongs({ albumCart, removeFromCart }) {
   const navigate = useNavigate();
-  console.log("track", tracks);
+  console.log("albumCart", albumCart);
   return (
-    <div>
-      {tracks.map((track, i) => {
+    <div className="col-12 col-md-9 offset-md-3 my-5 pr-5">
+      {albumCart.map((track, i) => {
         return (
           <div
             className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center"
@@ -47,9 +50,7 @@ function Song({ tracks, addToCart }) {
             </small>
             <span
               onClick={() => {
-                addToCart(track);
-                let data = document.getElementById("love-icon-id");
-                data.style.color = "red";
+                removeFromCart(i);
               }}
             >
               <AiFillHeart id="love-icon-id" className="love-icon ml-2" />
@@ -61,4 +62,4 @@ function Song({ tracks, addToCart }) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Song);
+export default connect(mapStateToProps, mapDispatchToProps)(LikedSongs);

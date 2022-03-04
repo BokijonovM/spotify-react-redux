@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { AiFillHeart } from "react-icons/ai";
 
 function Sidebar(props) {
   const location = useLocation();
@@ -47,8 +48,9 @@ function Sidebar(props) {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/albums" className="nav-item nav-link">
-                      <i className="fas fa-home fa-lg"></i>&nbsp; Liked songs
+                    <Link to="/liked-songs" className="nav-item nav-link">
+                      <AiFillHeart style={{ fontSize: "25px" }} />
+                      &nbsp; Liked Songs
                     </Link>
                   </li>
                   <li>
