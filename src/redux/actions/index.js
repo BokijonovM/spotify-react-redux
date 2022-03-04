@@ -56,7 +56,7 @@ export const getArtistAction = (artistId) => {
         }
       );
       if (response.ok) {
-        let { data } = await response.json();
+        let data = await response.json();
         console.log("Artist IN ACTION CREATOR", data);
         
         dispatch({

@@ -32,7 +32,7 @@ const Artist = ({
   // const [artist, setArtist] = useState({});
   // const [songs, setSongs] = useState([]);
   const  params  = useParams();
-
+console.log(artistFromReduxStore);
 console.log(songsFromReduxStore);
 
   // let headers = new Headers({
