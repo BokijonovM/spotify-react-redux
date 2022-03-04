@@ -4,6 +4,7 @@ export const GET_ARTISTSONGS = "GET_ARTISTSONGS";
 export const GET_ARTIST = "GET_ARTIST";
 export const GET_ARTIST_ERROR = "GET_ARTIST_ERROR";
 export const GET_ARTIST_LOADING = "GET_ARTIST_LOADING";
+export const SELECT_SONG = 'SELECT_SONG'
 
 export const addToFavouritesArtistsAction = (artistToAdd) => ({
   type: ADD_TO_FAVOURITESARTISTS,
@@ -14,6 +15,11 @@ export const removeFromFavouritesArtistsAction = (indexToRemove) => ({
   type: REMOVE_FROM_FAVOURITESARTISTS,
   payload: indexToRemove,
 });
+
+export const selectSongAction = (song) => ({
+    type: SELECT_SONG,
+    payload: song
+})
 
 export const getArtistAction = (artistId) => {
   console.log("in getArtistAction");
@@ -104,10 +110,7 @@ export const searchAction = (term)=>({
     type: ADD_TO_HOME_DISPLAY,
     payload: term
 }) 
-// export const selectSongAction = (song) => ({
-//     type: SELECT_SONG,
-//     payload: song
-// })
+
 
 export const getDataSearch = (query) =>{
     return (dispatch) => {

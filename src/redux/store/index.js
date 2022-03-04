@@ -26,12 +26,16 @@ export const initialState = {
     isLoading: true,
     searchTerm: [],
   },
+  songs:{
+      selectedSongs: {}
+  }
 };
 
 const bigReducer = combineReducers({
   favouritesArtists: favouritesArtistsReducer,
   artist: mainReducer,
   artistPage: artistReducer,
+  songs: SongReducer,
 });
 
 export const configureStore = createStore(

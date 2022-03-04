@@ -1,19 +1,19 @@
-// import { SELECT_SONG  } from "../actions";
-// import { initialState } from "../store";
+import { SELECT_SONG  } from "../actions";
+import { initialState } from "../store";
 
 
-// export  const SongReducer = ( state= initialState.songs, action)=>{
+export  const SongReducer = ( state= initialState.songs, action)=>{
 
-//     switch(action.type){
+    switch(action.type){
              
-//                 case SELECT_SONG: {
-//                     return {
-//                         ...state,
-//                         selectedSong: action.payload
-//                     }
-//                 }
+                case SELECT_SONG: {
+                    return {
+                        ...state,
+                        selectedSongs: action.payload
+                    }
+                }
 
-//         default: 
-//         return state
-//     }
-// }
+        default: 
+        return state
+    }
+}

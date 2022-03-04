@@ -77,7 +77,9 @@ class Album extends React.Component {
               <div className="col-md-10 mb-5" id="trackList">
                 {this.state.songs.map((song) => (
                   <Song track={song} key={song.id} />
-                ))}
+                ))
+                
+                }
               </div>
             </Row>
           </div>
