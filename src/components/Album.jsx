@@ -1,90 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Song from "./Song";
 import { Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { addToAlbumCartActionWithThunk } from "../redux/actions";
+import { getAlbumsAction } from "../redux/actions";
 
-class Album extends React.Component {
-  state = {
-    album: {},
-    songs: [],
-  };
+const mapStateToProps = (state) => ({
+  cartLength: state.albumCart.albums.length,
+  albumsFromReduxStore: state.album.stock,
+  albumInfo: state.album.album,
+});
 
-  componentDidMount = async () => {
-    let albumId = this.props.match.params.id;
+const mapDispatchToProps = (dispatch) => ({
+  addToAlbumCart: (musicToAdd) => {
+    dispatch(addToAlbumCartActionWithThunk(musicToAdd));
+  },
+  getAlbums: (query) => {
+    console.log("in mapDispatchToProps");
+    dispatch(getAlbumsAction(query));
+  },
+});
 
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "222902beabmshb95a65b737cead6p1f3ac9jsn23ced94c0d20",
-    });
+const Album = ({ albumInfo, getAlbums, albumsFromReduxStore, cartLength }) => {
+  const params = useParams();
 
-    try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/album/" + albumId,
-        {
-          method: "GET",
-          headers,
-        }
-      );
+  useEffect(() => {
+    getAlbums(params.id);
 
-      if (response.ok) {
-        let album = await response.json();
-        this.setState({
-          album,
-          songs: album.tracks.data,
-        });
-      }
-    } catch (exception) {
-      console.log(exception);
-    }
-  };
-
-  render() {
-    return (
-      <div className="col-12 col-md-9 offset-md-3 mainPage">
-        <Row className="mb-3">
-          <div className="col-9 col-lg-11 mainLinks d-none d-md-flex">
-            <div>TRENDING</div>
-            <div>PODCAST</div>
-            <div>MOODS AND GENRES</div>
-            <div>NEW RELEASES</div>
-            <div>DISCOVER</div>
-          </div>
-        </Row>
-        <Row>
-          {this.state.album.cover && (
-            <div className="col-md-3 pt-5 text-center" id="img-container">
-              <img
-                src={this.state.album.cover}
-                className="card-img img-fluid"
-                alt="Album"
-              />
-              <div className="mt-4 text-center">
-                <p className="album-title">{this.state.album.title}</p>
-              </div>
-              <div className="text-center">
-                <p className="artist-name">
-                  {this.state.album.artist ? this.state.album.artist.name : ""}
-                </p>
-              </div>
-              <div className="mt-4 text-center">
-                <button id="btnPlay" className="btn btn-success" type="button">
-                  Play
-                </button>
-              </div>
+    console.log("new", albumInfo);
+  }, []);
+  return (
+    <div className="col-12 col-md-9 offset-md-3 mainPage">
+      <Row className="mb-3">
+        <div className="col-9 col-lg-11 mainLinks d-none d-md-flex">
+          <div>TRENDING</div>
+          <div>PODCAST</div>
+          <div>MOODS AND GENRES</div>
+          <div>NEW RELEASES</div>
+          <div>DISCOVER</div>
+        </div>
+      </Row>
+      <Row style={{ marginRight: "-200px" }}>
+        {albumInfo.cover && (
+          <div className="col-md-3 pt-5 text-center" id="img-container">
+            <img
+              src={albumInfo.cover}
+              className="card-img img-fluid"
+              alt="AlbumInfo"
+            />
+            <div className="mt-4 text-center">
+              <p className="album-title">{albumInfo.title}</p>
             </div>
-          )}
-          <div className="col-md-8 p-5">
-            <Row>
-              <div className="col-md-10 mb-5" id="trackList">
-                {this.state.songs.map((song) => (
-                  <Song track={song} key={song.id} />
-                ))}
-              </div>
-            </Row>
+            <div className="text-center">
+              <p className="artist-name">
+                {albumInfo.artist ? albumInfo.artist.name : ""}
+              </p>
+            </div>
+            <div className="mt-4 text-center d-flex">
+              <button id="btnPlay" className="btn btn-success" type="button">
+                Play
+              </button>
+              <button
+                id="btnPlayy"
+                className="btn btn-success ml-2"
+                type="button"
+              >
+                {cartLength}
+              </button>
+            </div>
           </div>
-        </Row>
-      </div>
-    );
-  }
-}
+        )}
+        <div className="col-md-8 py-5 pl-5">
+          <Row>
+            <div className="col-md-10 mb-5" id="trackList">
+              <Song tracks={albumsFromReduxStore} />
+            </div>
+          </Row>
+        </div>
+      </Row>
+    </div>
+  );
+};
 
-export default Album;
+export default connect(mapStateToProps, mapDispatchToProps)(Album);

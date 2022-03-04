@@ -1,13 +1,13 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { AiFillHeart } from "react-icons/ai";
 
-class Sidebar extends React.Component {
-  state = {
-    searchInput: "",
-  };
-
-  render() {
-    return (
+function Sidebar(props) {
+  const location = useLocation();
+  const [searchInput, setSearchInput] = useState("");
+  return (
+    <div>
       <div className="col-2">
         <nav
           className="navbar navbar-expand-md navbar-white bg-navbar fixed-left justify-content-between"
@@ -48,8 +48,9 @@ class Sidebar extends React.Component {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/albums" className="nav-item nav-link">
-                      <i className="fas fa-home fa-lg"></i>&nbsp; Liked songs
+                    <Link to="/liked-songs" className="nav-item nav-link">
+                      <AiFillHeart style={{ fontSize: "25px" }} />
+                      &nbsp; Liked Songs
                     </Link>
                   </li>
                   <li>
@@ -57,7 +58,7 @@ class Sidebar extends React.Component {
                       <i className="fas fa-home fa-lg"></i>&nbsp; Fav Artists
                     </Link>
                   </li>
-                  {this.props.location.pathname === "/" && (
+                  {location.pathname === "/" && (
                     <li>
                       <div className="input-group mt-3">
                         <input
@@ -68,9 +69,7 @@ class Sidebar extends React.Component {
                           aria-label="Search"
                           aria-describedby="basic-addon2"
                           onChange={(event) =>
-                            this.setState({
-                              searchInput: event.currentTarget.value,
-                            })
+                            setSearchInput(event.target.value)
                           }
                         />
                         <div
@@ -81,9 +80,7 @@ class Sidebar extends React.Component {
                             className="btn btn-outline-secondary btn-sm"
                             type="button"
                             id="button-addon1"
-                            onClick={() =>
-                              this.props.search(this.state.searchInput)
-                            }
+                            onClick={() => props.search(searchInput)}
                           >
                             GO
                           </button>
@@ -96,19 +93,19 @@ class Sidebar extends React.Component {
             </div>
           </div>
 
-          <div className="nav-btn">
+          <div className="nav-btn mb-5">
             <button className="btn" id="signup-btn" type="button">
               Sign Up
             </button>
-            <button className="btn" id="login-btn" type="button">
+            <button className="btn mb-5" id="login-btn" type="button">
               Login
             </button>
             <a href="/">Cookie Policy</a> |<a href="/"> Privacy</a>
           </div>
         </nav>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default withRouter(Sidebar);
+export default Sidebar;

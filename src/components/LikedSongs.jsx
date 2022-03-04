@@ -1,34 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { removeFromCartAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-import { connect } from "react-redux";
-import {
-  addToAlbumCartActionWithThunk,
-  removeFromCartAction,
-} from "../redux/actions";
+import { Button } from "react-bootstrap";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  albumCart: state.albumCart.albums,
+  cartLength: state.albumCart.albums.length,
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (musicToAdd) => {
-    dispatch(addToAlbumCartActionWithThunk(musicToAdd));
-  },
   removeFromCart: (index) => {
     dispatch(removeFromCartAction(index));
   },
 });
 
-function Song({ tracks, addToCart }) {
-  const [selectedSong, setSelectedSong] = useState(null);
+function LikedSongs({ albumCart, removeFromCart, cartLength }) {
   const navigate = useNavigate();
+  console.log("albumCart", albumCart);
   return (
-    <div>
-      {tracks.map((track, i) => {
+    <div className="col-12 col-md-9 offset-md-3 my-5 pr-5">
+      {albumCart.map((track, i) => {
         return (
           <div
-            className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center"
+            className="py-1 pl-2 pr-5 w-100 trackHover d-flex align-items-center"
             key={track.id}
-            onClick={() => setSelectedSong(track)}
           >
             <p className="text-light mb-0">{i + 1}</p>
             <div className="px-3">
@@ -54,7 +51,7 @@ function Song({ tracks, addToCart }) {
             </small>
             <span
               onClick={() => {
-                addToCart(track);
+                removeFromCart(i);
               }}
             >
               <AiFillHeart id="love-icon-id" className="love-icon ml-2" />
@@ -62,8 +59,11 @@ function Song({ tracks, addToCart }) {
           </div>
         );
       })}
+      <Button className="number-of-liked-songs" variant="info">
+        {cartLength}
+      </Button>
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Song);
+export default connect(mapStateToProps, mapDispatchToProps)(LikedSongs);

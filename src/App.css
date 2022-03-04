@@ -6,6 +6,7 @@ body {
     rgba(33, 44, 61, 1) 42%,
     rgb(15, 21, 29) 100%
   );
+  overflow-x: hidden;
 }
 
 /*SIDEBAR SECTION*/
@@ -170,8 +171,9 @@ ul {
 }
 
 .trackHover:hover {
-  background-color: black;
+  background-color: rgb(65, 65, 65);
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .trackHover a {
@@ -181,6 +183,12 @@ ul {
 #btnPlay {
   font-weight: 700;
   width: 150px;
+  height: 50px;
+  border-radius: 50px;
+}
+#btnPlayy {
+  font-weight: 700;
+  width: 50px;
   height: 50px;
   border-radius: 50px;
 }
@@ -230,3 +238,12 @@ ul {
 .mainPage img {
   width: 200px;
 }
+.number-of-liked-songs {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50% !important;
+}
+/* footer */
