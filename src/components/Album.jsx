@@ -2,46 +2,44 @@ import React, { useEffect, useState } from "react";
 import Song from "./Song";
 import { Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { addToAlbumCartActionWithThunk } from "../redux/actions";
+import { getAlbumsAction } from "../redux/actions";
 
-const Album = () => {
+const mapStateToProps = (state) => ({
+  cartLength: state.albumCart.albums.length,
+  albumsFromReduxStore: state.album.stock,
+  albumInfo: state.album.album,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addToAlbumCart: (musicToAdd) => {
+    dispatch(addToAlbumCartActionWithThunk(musicToAdd));
+  },
+  getAlbums: (query) => {
+    console.log("in mapDispatchToProps");
+    dispatch(getAlbumsAction(query));
+  },
+});
+
+const Album = ({
+  cartLength,
+  addToAlbumCart,
+  albumInfo,
+  getAlbums,
+  albumsFromReduxStore,
+}) => {
   const [album, setAlbum] = useState({});
   const [songs, setSongs] = useState([]);
   const params = useParams();
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetchData();
+    setQuery(params.id);
+    getAlbums();
+    setAlbum(albumInfo);
+    console.log("new", albumsFromReduxStore);
   }, []);
-
-  const fetchData = async () => {
-    let albumId = params.id;
-
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "222902beabmshb95a65b737cead6p1f3ac9jsn23ced94c0d20",
-    });
-
-    try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/album/" + albumId,
-        {
-          method: "GET",
-          headers,
-        }
-      );
-
-      if (response.ok) {
-        let album = await response.json();
-        setSongs(album.tracks.data);
-        setAlbum(album);
-        console.log(album.tracks.data);
-      } else {
-        console.log("error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="col-12 col-md-9 offset-md-3 mainPage">
       <Row className="mb-3">
@@ -75,9 +73,7 @@ const Album = () => {
         <div className="col-md-8 py-5 pl-5">
           <Row>
             <div className="col-md-10 mb-5" id="trackList">
-              {songs.map((song) => (
-                <Song track={song} key={song.id} />
-              ))}
+              <Song tracks={albumsFromReduxStore} />
             </div>
           </Row>
         </div>
@@ -86,4 +82,4 @@ const Album = () => {
   );
 };
 
-export default Album;
+export default connect(mapStateToProps, mapDispatchToProps)(Album);
