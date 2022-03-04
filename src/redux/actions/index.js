@@ -12,6 +12,7 @@ export const ADD_TO_ALBUM_CART = "ADD_TO_ALBUM_CART";
 export const REMOVE_TO_ALBUM_CART = "REMOVE_TO_ALBUM_CART";
 export const ADD_TO_HOME_DISPLAY = "ADD_TO_HOME_DISPLAY";
 export const LOADING_WHILE_DISPLAY = "LOADING_WHILE_DISPLAY";
+export const SELECT_SONG = 'SELECT_SONG'
 
 export const addToFavouritesArtistsAction = (artistToAdd) => ({
   type: ADD_TO_FAVOURITESARTISTS,
@@ -22,6 +23,11 @@ export const removeFromFavouritesArtistsAction = (indexToRemove) => ({
   type: REMOVE_FROM_FAVOURITESARTISTS,
   payload: indexToRemove,
 });
+
+export const selectSongAction = (song) => ({
+  type: SELECT_SONG,
+  payload: song
+})
 
 export const getArtistAction = (artistId) => {
   console.log("in getArtistAction");

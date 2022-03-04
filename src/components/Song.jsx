@@ -5,20 +5,24 @@ import { connect } from "react-redux";
 import {
   addToAlbumCartActionWithThunk,
   removeFromCartAction,
+  selectSongAction,
 } from "../redux/actions";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  selectedMusic: state.songs.selectedSongs
+});
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (musicToAdd) => {
-    dispatch(addToAlbumCartActionWithThunk(musicToAdd));
+    dispatch(addToAlbumCartActionWithThunk(musicToAdd));  
   },
   removeFromCart: (index) => {
     dispatch(removeFromCartAction(index));
   },
+  selectedMusic: (song) => {dispatch(selectSongAction(song))}
 });
 
-function Song({ tracks, addToCart }) {
+function Song({ tracks, addToCart, selectedMusic }) {
   const [selectedSong, setSelectedSong] = useState(null);
   const navigate = useNavigate();
   return (
@@ -35,18 +39,21 @@ function Song({ tracks, addToCart }) {
               <h6
                 className="card-title trackHover mb-0"
                 style={{ color: "white" }}
-              >
+                onClick={ ()=> selectedMusic(track) }
+                >
                 {track.title}
               </h6>
               <p
-                onClick={() => navigate(`/artist/${track.artist.id}`)}
+               
                 className="mb-0 text-muted"
                 style={{ color: "white", fontSize: "14px" }}
               >
                 {track.artist.name}
               </p>
             </div>
-            <small className="duration ml-auto" style={{ color: "white" }}>
+            <small className="duration ml-auto" style={{ color: "white" }}
+             onClick={() => navigate(`/artist/${track.artist.id}`)}
+            >
               {Math.floor(parseInt(track.duration) / 60)}:
               {parseInt(track.duration) % 60 < 10
                 ? "0" + (parseInt(track.duration) % 60)
