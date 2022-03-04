@@ -6,6 +6,7 @@ import {
   addToAlbumCartActionWithThunk,
   removeFromCartAction,
 } from "../redux/actions";
+import Player from "./Player";
 
 const mapStateToProps = (state) => ({});
 
@@ -28,7 +29,7 @@ function Song({ tracks, addToCart }) {
           <div
             className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center"
             key={track.id}
-            onClick={setSelectedSong(track)}
+            onClick={() => setSelectedSong(track)}
           >
             <p className="text-light mb-0">{i + 1}</p>
             <div className="px-3">
@@ -62,6 +63,7 @@ function Song({ tracks, addToCart }) {
           </div>
         );
       })}
+      <Player selectedSong={selectedSong} />
     </div>
   );
 }

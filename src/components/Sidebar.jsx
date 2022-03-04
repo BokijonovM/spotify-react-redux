@@ -93,11 +93,11 @@ function Sidebar(props) {
             </div>
           </div>
 
-          <div className="nav-btn">
+          <div className="nav-btn mb-5">
             <button className="btn" id="signup-btn" type="button">
               Sign Up
             </button>
-            <button className="btn" id="login-btn" type="button">
+            <button className="btn mb-5" id="login-btn" type="button">
               Login
             </button>
             <a href="/">Cookie Policy</a> |<a href="/"> Privacy</a>
