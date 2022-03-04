@@ -38,7 +38,7 @@ export const getAlbumsAction = (query) => {
     setTimeout(async () => {
       try {
         let response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/deezer/album/1121401",
+          "https://striveschool-api.herokuapp.com/api/deezer/album/" + query,
           {
             method: "GET",
             headers: {

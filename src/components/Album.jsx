@@ -29,16 +29,12 @@ const Album = ({
   getAlbums,
   albumsFromReduxStore,
 }) => {
-  const [album, setAlbum] = useState({});
-  const [songs, setSongs] = useState([]);
   const params = useParams();
-  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    setQuery(params.id);
-    getAlbums();
-    setAlbum(albumInfo);
-    console.log("new", albumsFromReduxStore);
+    getAlbums(params.id);
+
+    console.log("new", albumInfo);
   }, []);
   return (
     <div className="col-12 col-md-9 offset-md-3 mainPage">
@@ -52,15 +48,19 @@ const Album = ({
         </div>
       </Row>
       <Row>
-        {album.cover && (
+        {albumInfo.cover && (
           <div className="col-md-3 pt-5 text-center" id="img-container">
-            <img src={album.cover} className="card-img img-fluid" alt="Album" />
+            <img
+              src={albumInfo.cover}
+              className="card-img img-fluid"
+              alt="AlbumInfo"
+            />
             <div className="mt-4 text-center">
-              <p className="album-title">{album.title}</p>
+              <p className="album-title">{albumInfo.title}</p>
             </div>
             <div className="text-center">
               <p className="artist-name">
-                {album.artist ? album.artist.name : ""}
+                {albumInfo.artist ? albumInfo.artist.name : ""}
               </p>
             </div>
             <div className="mt-4 text-center">
