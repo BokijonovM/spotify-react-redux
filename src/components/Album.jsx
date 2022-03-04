@@ -69,6 +69,17 @@ const Album = ({ albumInfo, getAlbums, albumsFromReduxStore, cartLength }) => {
                 {cartLength}
               </button>
             </div>
+          )}
+          <div className="col-md-8 p-5">
+            <Row>
+              <div className="col-md-10 mb-5" id="trackList">
+                {this.state.songs.map((song) => (
+                  <Song track={song} key={song.id} />
+                ))
+                
+                }
+              </div>
+            </Row>
           </div>
         )}
         <div className="col-md-8 py-5 pl-5">

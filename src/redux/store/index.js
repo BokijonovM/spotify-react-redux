@@ -35,6 +35,9 @@ export const initialState = {
     isError: false,
     isLoading: true,
   },
+  songs: {
+    selectedSongs: {},
+  },
 };
 
 const bigReducer = combineReducers({
@@ -43,6 +46,7 @@ const bigReducer = combineReducers({
   artistPage: artistReducer,
   albumCart: cartReducerAlbum,
   album: albumReducer,
+  songs: SongReducer,
 });
 
 export const configureStore = createStore(

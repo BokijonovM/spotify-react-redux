@@ -1,121 +1,85 @@
-import React from "react";
-import { Navbar } from "react-bootstrap";
-import "./footre.css";
+import React, { useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
+import { connect } from "react-redux";
+const mapStateToProps = (state) => ({
+  selectedSongs: state.songs.selectedSongs,
+});
 
-function Player({ selectedSong }) {
+function Player({ selectedSongs }) {
+  const [audio, setAudio] = useState(new Audio(selectedSongs.preview));
+  const [playing, setPlaying] = useState(false);
+
+  const getDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secondsRemaining = seconds - minutes * 60;
+    return `${minutes}:${secondsRemaining}`;
+  };
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause();
+  }, [playing]);
+
+  useEffect(() => {
+    setAudio(new Audio(selectedSongs.preview));
+  }, [selectedSongs]);
   return (
-    <div className="footer-div">
-      {selectedSong ? (
-        <Navbar
-          expand="lg"
-          className="footer-main d-flex justify-content-between align-items-center"
-          variant="light"
-        >
-          <div className="music-player">
-            <div className="song-bar">
-              <div className="song-infos">
-                <div className="image-container">
-                  <img
-                    src="https://www.genius-lyrics.com/wp-content/uploads/2021/11/Dynasties-Dystopia-Lyrics-Denzel-Curry.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="song-description">
-                  <p className="title">Something</p>
-                  <p className="artist text-muted">
-                    {selectedSong.artist.name}
-                  </p>
-                </div>
-              </div>
-              <div className="icons">
-                <i className="bi bi-heart"></i>
-                <i className="bi bi-pip"></i>
+    <div className="container-fluid fixed-bottom bg-container pt-1">
+      <Row>
+        <div className="col-lg-10 offset-lg-2">
+          <Row>
+            <div className="col-6 col-md-4 col-lg-2 offset-3 offset-md-4 offset-lg-5 playerControls mt-1">
+              <Row>
+                <a href="/">
+                  <img src="/playerbuttons/Shuffle.png" alt="shuffle" />
+                </a>
+                <a href="/">
+                  <img src="/playerbuttons/Previous.png" alt="shuffle" />
+                </a>
+
+                <small>
+                  {playing ? (
+                    <img
+                      className="playicon"
+                      src="/playerbuttons/Pause.png"
+                      alt="play"
+                      onClick={() => setPlaying(!playing)}
+                    />
+                  ) : (
+                    <img
+                      className="playicon"
+                      src="/playerbuttons/Play.png"
+                      alt="play"
+                      onClick={() => setPlaying(!playing)}
+                    />
+                  )}
+                </small>
+
+                <a href="/">
+                  <img src="/playerbuttons/Next.png" alt="shuffle" />
+                </a>
+                <a href="/">
+                  <img src="/playerbuttons/Repeat.png" alt="shuffle" />
+                </a>
+              </Row>
+            </div>
+          </Row>
+          <Row className="justify-content-center playBar py-3">
+            <div className="col-8 col-md-6">
+              <div id="progress">
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  aria-valuenow={0}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                ></div>
               </div>
             </div>
-            <div className="progress-controller">
-              <div className="control-buttons mt-5 pb-0">
-                <i className="bi bi-shuffle"></i>
-                <i className="bi bi-skip-start-fill"></i>
-                <i className="play-pause bi bi-play-circle-fill"></i>
-                <i className="bi bi-skip-end-fill"></i>
-                <i className="bi bi-arrow-repeat"></i>
-              </div>
-              <div className="progress-container mb-5 pt-0">
-                <span>0:39</span>
-                <div className="progress-bar">
-                  <div className="progress"></div>
-                </div>
-                <span>2:58</span>
-              </div>
-            </div>
-            <div className="other-features">
-              <i className="bi bi-list-ul"></i>
-              <i className="bi bi-pc-display"></i>
-              <div className="volume-bar">
-                <i className="bi bi-volume-down-fill"></i>
-                <div className="progress-bar">
-                  <div className="progress"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Navbar>
-      ) : (
-        <Navbar
-          expand="lg"
-          className="footer-main d-flex justify-content-between align-items-center"
-          variant="light"
-        >
-          <div className="music-player">
-            <div className="song-bar">
-              <div className="song-infos">
-                <div className="image-container">
-                  <img
-                    src="https://www.genius-lyrics.com/wp-content/uploads/2021/11/Dynasties-Dystopia-Lyrics-Denzel-Curry.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="song-description">
-                  <p className="title">Something</p>
-                  <p className="artist text-muted">SomeOne</p>
-                </div>
-              </div>
-              <div className="icons">
-                <i className="bi bi-heart"></i>
-                <i className="bi bi-pip"></i>
-              </div>
-            </div>
-            <div className="progress-controller">
-              <div className="control-buttons mt-5 pb-0">
-                <i className="bi bi-shuffle"></i>
-                <i className="bi bi-skip-start-fill"></i>
-                <i className="play-pause bi bi-play-circle-fill"></i>
-                <i className="bi bi-skip-end-fill"></i>
-                <i className="bi bi-arrow-repeat"></i>
-              </div>
-              <div className="progress-container mb-5 pt-0">
-                <span>0:39</span>
-                <div className="progress-bar">
-                  <div className="progress"></div>
-                </div>
-                <span>2:58</span>
-              </div>
-            </div>
-            <div className="other-features">
-              <i className="bi bi-list-ul"></i>
-              <i className="bi bi-pc-display"></i>
-              <div className="volume-bar">
-                <i className="bi bi-volume-down-fill"></i>
-                <div className="progress-bar">
-                  <div className="progress"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Navbar>
-      )}
+          </Row>
+        </div>
+      </Row>
     </div>
   );
 }
 
-export default Player;
+export default connect(mapStateToProps)(Player);
