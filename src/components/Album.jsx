@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Song from "./Song";
 import { Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
