@@ -6,6 +6,9 @@ import artistReducer from "../reducers/artist";
 import { mainReducer } from "../reducers/main";
 import { SongReducer } from "../reducers/songs";
 
+import thunk from "redux-thunk";
+import albumReducer from "../reducers/album";
+import cartReducerAlbum from "../reducers/album2";
 
 const aComposeFunctionThatAlwaysWorks =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -25,6 +28,14 @@ export const initialState = {
     isError: false,
     isLoading: true,
     searchTerm: [],
+  albumCart: {
+    albums: [],
+  },
+  album: {
+    stock: [],
+    album: [],
+    isError: false,
+    isLoading: true,
   },
 };
 
@@ -32,23 +43,14 @@ const bigReducer = combineReducers({
   favouritesArtists: favouritesArtistsReducer,
   artist: mainReducer,
   artistPage: artistReducer,
+  albumCart: cartReducerAlbum,
+  album: albumReducer,
 });
 
 export const configureStore = createStore(
-  
   bigReducer,
   initialState,
-  
   aComposeFunctionThatAlwaysWorks(applyMiddleware(thunk))
-);
-
-
-
-
- 
-
-
-
-
+});
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Player from "./components/Player";
 import Sidebar from "./components/Sidebar";
@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import { Row } from "react-bootstrap";
 import Artist from "./components/Artist";
 import Album from "./components/Album";
+import LikedSongs from "./components/LikedSongs";
 
 let headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -44,21 +45,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <div className="container-fluid">
           <Row>
             <Sidebar search={this.search} />
-            <Route
-              path="/"
-              exact
-              render={() => <Home searchResults={this.state.searchResults} />}
-            />
-            <Route path="/artist/:id" component={Artist} />
-            <Route path="/album/:id" component={Album} />
+            <Routes>
+              <Route
+                path="/"
+                element={<Home searchResults={this.state.searchResults} />}
+              />
+              <Route path="/artist/:id" element={<Artist />} />
+              <Route path="/album/:id" element={<Album />} />
+              <Route path="/liked-songs" element={<LikedSongs />} />
+            </Routes>
           </Row>
         </div>
         <Player />
-      </Router>
+      </BrowserRouter>
     );
   }
 }

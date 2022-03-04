@@ -6,6 +6,10 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import { configureStore } from "./redux/store";
+import Popper from "@popperjs/core";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={configureStore}>
