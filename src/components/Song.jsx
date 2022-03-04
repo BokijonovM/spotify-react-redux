@@ -6,7 +6,6 @@ import {
   addToAlbumCartActionWithThunk,
   removeFromCartAction,
 } from "../redux/actions";
-import Player from "./Player";
 
 const mapStateToProps = (state) => ({});
 
@@ -63,7 +62,6 @@ function Song({ tracks, addToCart }) {
           </div>
         );
       })}
-      <Player selectedSong={selectedSong} />
     </div>
   );
 }
