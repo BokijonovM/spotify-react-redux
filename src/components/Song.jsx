@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Song({ track }) {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center">
@@ -9,7 +11,7 @@ function Song({ track }) {
             {track.title}
           </h6>
           <p
-            // onClick={() => navigate(`/artist/${track.id}`)}
+            onClick={() => navigate(`/artist/${track.artist.id}`)}
             className="mb-0 text-muted"
             style={{ color: "white", fontSize: "14px" }}
           >
