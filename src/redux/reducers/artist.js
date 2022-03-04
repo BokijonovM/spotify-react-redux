@@ -1,4 +1,9 @@
-import { GET_ARTIST, GET_ARTIST_ERROR, GET_ARTIST_LOADING } from "../actions";
+import {
+  GET_ARTIST,
+  GET_ARTIST_ERROR,
+  GET_ARTIST_LOADING,
+  GET_ARTISTSONGS,
+} from "../actions";
 import { initialState } from "../store";
 
 // let's write our reducer! :)
@@ -7,7 +12,13 @@ const artistReducer = (state = initialState.artist, action) => {
     case GET_ARTIST:
       return {
         ...state,
-        jobsArray: action.payload,
+        setArtist: action.payload,
+      };
+
+    case GET_ARTISTSONGS:
+      return {
+        ...state,
+        songs: action.payload,
       };
 
     case GET_ARTIST_ERROR:
