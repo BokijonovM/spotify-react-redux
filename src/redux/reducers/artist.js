@@ -7,7 +7,7 @@ import {
 import { initialState } from "../store";
 
 // let's write our reducer! :)
-const artistReducer = (state = initialState.artist, action) => {
+const artistReducer = (state = initialState.artistPage, action) => {
   switch (action.type) {
     case GET_ARTIST:
       return {
