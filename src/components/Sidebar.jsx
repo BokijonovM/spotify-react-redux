@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
-class Sidebar extends React.Component {
+export default class Sidebar extends Component {
   state = {
     searchInput: "",
   };
@@ -110,5 +110,3 @@ class Sidebar extends React.Component {
     );
   }
 }
-
-export default withRouter(Sidebar);

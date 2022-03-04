@@ -31,6 +31,7 @@ class Album extends React.Component {
           album,
           songs: album.tracks.data,
         });
+        console.log(album);
       }
     } catch (exception) {
       console.log(exception);
@@ -72,7 +73,7 @@ class Album extends React.Component {
               </div>
             </div>
           )}
-          <div className="col-md-8 p-5">
+          <div className="col-md-8 py-5 pl-5">
             <Row>
               <div className="col-md-10 mb-5" id="trackList">
                 {this.state.songs.map((song) => (
