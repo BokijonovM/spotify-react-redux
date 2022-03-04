@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { getArtistAction } from "../redux/actions";
 
 const mapStateToProps = (state) => ({
-  artistFromReduxStore: state.artist.setArtist,
-  artistFetchFailed: state.artist.isError,
-  areArtistStillFetching: state.artist.isLoading,
-  songsFromReduxStore: state.artist.songs,
+  artistFromReduxStore: state.artistPage.setArtist,
+  artistFetchFailed: state.artistPage.isError,
+  areArtistStillFetching: state.artistPage.isLoading,
+  songsFromReduxStore: state.artistPage.songs,
 });
 
 
