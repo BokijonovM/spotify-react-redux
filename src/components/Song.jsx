@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { connect } from "react-redux";
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 function Song({ tracks, addToCart }) {
+  const [selectedSong, setSelectedSong] = useState(null);
   const navigate = useNavigate();
   return (
     <div>
@@ -27,6 +28,7 @@ function Song({ tracks, addToCart }) {
           <div
             className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center"
             key={track.id}
+            onClick={setSelectedSong(track)}
           >
             <p className="text-light mb-0">{i + 1}</p>
             <div className="px-3">

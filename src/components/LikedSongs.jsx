@@ -24,7 +24,7 @@ function LikedSongs({ albumCart, removeFromCart, cartLength }) {
       {albumCart.map((track, i) => {
         return (
           <div
-            className="py-1 pl-2 pr-3 w-100 trackHover d-flex align-items-center"
+            className="py-1 pl-2 pr-5 w-100 trackHover d-flex align-items-center"
             key={track.id}
           >
             <p className="text-light mb-0">{i + 1}</p>

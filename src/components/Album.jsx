@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const Album = ({ albumInfo, getAlbums, albumsFromReduxStore }) => {
+const Album = ({ albumInfo, getAlbums, albumsFromReduxStore, cartLength }) => {
   const params = useParams();
 
   useEffect(() => {
@@ -57,9 +57,16 @@ const Album = ({ albumInfo, getAlbums, albumsFromReduxStore }) => {
                 {albumInfo.artist ? albumInfo.artist.name : ""}
               </p>
             </div>
-            <div className="mt-4 text-center">
+            <div className="mt-4 text-center d-flex">
               <button id="btnPlay" className="btn btn-success" type="button">
                 Play
+              </button>
+              <button
+                id="btnPlayy"
+                className="btn btn-success ml-2"
+                type="button"
+              >
+                {cartLength}
               </button>
             </div>
           </div>
