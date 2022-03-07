@@ -1,8 +1,29 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { Navbar } from "react-bootstrap";
+import { connect } from "react-redux";
 import "./footre.css";
+const mapStateToProps = (state)=>({
+  selectedMusic: state.songs.selectedSongs
+})
+function Player({ selectedSong, selectedMusic }) {
+  const [audio, setAudio] = useState(new Audio(selectedMusic.preview))
+  const [playing, setPlaying] = useState(false)
 
-function Player({ selectedSong }) {
+  const getDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const secondsRemaining = seconds - minutes * 60
+    return `${minutes}:${secondsRemaining}`
+  }
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause()
+  }, [playing])
+
+  useEffect(() => {
+    setAudio(new Audio(selectedMusic.preview))
+  }, [selectedMusic])
   return (
     <div className="footer-div">
       {selectedSong ? (
@@ -89,8 +110,11 @@ function Player({ selectedSong }) {
               <div className="control-buttons mt-5 pb-0">
                 <i className="bi bi-shuffle"></i>
                 <i className="bi bi-skip-start-fill"></i>
-                <i className="play-pause bi bi-play-circle-fill"></i>
-                <i className="bi bi-skip-end-fill"></i>
+                {
+                    playing
+                      ? <i className="play-pause bi bi-pause-circle-fill" onClick={() => setPlaying(!playing)} />
+                      : <i className="play-pause bi bi-play-circle-fill" onClick={() => setPlaying(!playing)} />
+                  }                <i className="bi bi-skip-end-fill"></i>
                 <i className="bi bi-arrow-repeat"></i>
               </div>
               <div className="progress-container mb-5 pt-0">
@@ -118,4 +142,4 @@ function Player({ selectedSong }) {
   );
 }
 
-export default Player;
+export default connect(mapStateToProps)(Player);
